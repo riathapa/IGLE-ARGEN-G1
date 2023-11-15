@@ -1,20 +1,19 @@
-#include<iostream>
-using namespace std;
+#include "GameBoard.h"
+#include <iostream>
 
-#include "Board.h"
-#include "Dice.h"
-#include "Dice.cpp"
-#include "Player.h"
+int main() {
 
+    GameBoard game(6, 9);
 
-int main(){
-    
-    cout << "\n   WELCOME TO IGLE ARGEN\n"; 
-    cout << "----------------------------"; 
+    //Board initialization
+    game.initializeBoard();
 
-    Dice randomGen;
+    // Call this to place obstacles on the board
+    game.placeObstacles(); 
 
-    cout << "\nRandom number between 1 and 6: " << randomGen.getRandomNumber() << endl;
+    //displaying the board
+    game.displayBoard();
 
     return 0;
+    
 }
