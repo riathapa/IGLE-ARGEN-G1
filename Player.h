@@ -1,20 +1,28 @@
-#ifndef PLAYER_H_
-#define PLAYER_H_
 
-#include<string>
-using namespace std;
+#ifndef PLAYER_H
+#define PLAYER_H
 
-class Player{
+#include <string>
+#include <vector>
+#include <set>
 
-    private:
-        string name;
-        string colour;     
-        //int counterOfLeftElements;   
+class Player {
+private:
+    std::string name;
+    std::string color;
+    static std::set<std::string> availableColors;
+    static std::set<std::string> usedNames; // To keep track of names already used
 
-    public:
-        void moveLeft();
-        void moveRight();
-        void moveAhead();
+public:
+    Player();
+    void enterName(int playerNumber);
+    void chooseColor();
+    static int enterNumberOfPlayers();
+    static void initializeAvailableColors();
+    std::string getName() const;
+    std::string getColor() const;
 
+    // Additional functionality can be added as needed
 };
-#endif
+
+#endif // PLAYER_H
