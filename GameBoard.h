@@ -14,7 +14,7 @@ public:
 private:
     int tracks;
     int columns;
-    std::vector<std::vector<std::string>> board;
+    std::vector<std::vector<std::string> > board;
 };
 
 #endif 

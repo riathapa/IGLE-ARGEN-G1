@@ -57,5 +57,6 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "vector": "cpp"
-    }
+    },
+    "C_Cpp.configurationWarnings": "enabled"
 }
