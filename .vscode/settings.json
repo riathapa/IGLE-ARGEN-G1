@@ -57,7 +57,11 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "vector": "cpp",
-        "__assert": "cpp"
+        "__assert": "cpp",
+        "set": "cpp",
+        "__tree": "cpp",
+        "thread": "cpp"
     },
-    "C_Cpp.configurationWarnings": "enabled"
+    "C_Cpp.configurationWarnings": "enabled",
+    "editor.wordWrap": "on"
 }

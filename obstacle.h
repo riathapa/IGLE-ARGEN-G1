@@ -2,7 +2,6 @@
 #define OBSTACLE_H
 #include "Square.h"
 
-
 class Obstacle : public Square {
 
 private:

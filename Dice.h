@@ -7,7 +7,7 @@ using namespace std;
 class Dice{
 
     public: 
-       void roll();
+    //    void roll();
        int getRandomNumber();
 
 };

@@ -1,9 +1,13 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
+// #include "Player.h"
+
 #include <string>
 #include <iostream>
 #include <iomanip>
+
+
 
 //LEVEL 1 CLASS
 class Square {
@@ -11,7 +15,8 @@ class Square {
         Square() = default;
         virtual ~Square() = default;
 
-        virtual void display() const = 0;
+        virtual void display();
+        // virtual void print(vector<Player> &players, int numberOfPlayers);
 };
 
 #endif
