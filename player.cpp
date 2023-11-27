@@ -130,7 +130,6 @@ string Player ::getColor() const
 
 void Player ::print(vector<Player> &players, int numberOfPlayers)
 {
-
     cout << "\nThe following players have been entered to the game -\n\n";
 
     for (const Player &player : players)
@@ -232,203 +231,19 @@ int Player ::movement(GameBoard &board, int diceValue)
     // USER INPUT
     int userInput;
 
-    // TRACK NUMBER
-    int trackNumber;
-
-    // COLUMN NUMBER
-    int columnNumber;
     cout << "\nSPIDERMAN - WOULD YOU LIKE TO MOVE YOUR PIECE ON TOP? BEFORE THE COMPULSARY MOVEMENT? PRESS 1 FOR YES. PRESS 2 FOR NO :: ";
     cin >> userInput;
 
     return userInput;
-    switch (userInput)
-    {
-
-    case 1:
-        cout << "\nSPIDERMAN - USER CHOSE OPTION " << userInput;
-        userWantsToMove(board);
-
-    default:
-    }
-}
-//     //     cout << "\nSPIDERMAN - WHERE WOULD YOU LIKE TO MOVE YOUR PIECE? AHEAD(1)? LEFT(2)? RIGHT?(3) :: ";
-//     //     cin >> userInput;
-
-//     //     cout << "\nSPIDERMAN - PLEASE SELECT THE TRACK NUMBER :: ";
-//     //     cin >> trackNumber;
-
-//     //     cout << "\nSPIDERMAN - PLEASE SELECT THE COLUMN NUMBER :: ";
-//     //     cin >> columnNumber;
-
-//     //     if (userInput == 1)
-//     //     {
-
-//     //         if (board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top().find(name))
-//     //         {
-
-//     //             // storing size which will be used later
-//     //             int size = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.size();
-
-//     //             // strogin value of hedgehog
-//     //             string hedgehog = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top();
-
-//     //             // Popping the element since it is going to next cell
-//     //             board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.pop();
-
-//     //             // Removing the last element of array so that after movement, displaying is correct.
-//     //             board.mainBoard[trackNumber - 1][columnNumber - 1].elementsDisplayerArray[size - 1] = '\0';
-//     //             board.mainBoard[trackNumber - 1][columnNumber - 1].elementsCounter--;
-
-//     //             // Putting the elemtn in the front cell
-//     //             board.mainBoard[trackNumber - 1][columnNumber].cellStack.push(hedgehog);
-
-//     //             // array index starts at 0;
-//     //             board.mainBoard[trackNumber - 1][columnNumber].elementsDisplayerArray[board.mainBoard[trackNumber - 1][columnNumber].elementsCounter] = hedgehog;
-
-//     //             board.mainBoard[trackNumber - 1][columnNumber].elementsCounter++;
-
-//     //             std::this_thread::sleep_for(std::chrono::seconds(1));
-
-//     //             cout << "\n-----------------------------------------------\n";
-
-//     //             board.displayBoard();
-
-//     //             cout << "\n-----------------------------------------------\n";
-//     //             std::this_thread::sleep_for(std::chrono::seconds(1));
-//     //         }
-//     //     }
-
-//     //     else if (userInput == 2)
-//     //     {
-
-//     //         if (board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top().find(name))
-//     //         {
-
-//     //             // storing size which will be used later
-//     //             int size = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.size();
-
-//     //             // strogin value of hedgehog
-//     //             string hedgehog = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top();
-//     //             board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.pop();
-
-//     //             // Removing the last element of array so that after movement, displaying is correct.
-//     //             board.mainBoard[trackNumber - 1][columnNumber - 1].elementsDisplayerArray[size - 1] = '\0';
-//     //             board.mainBoard[trackNumber - 1][columnNumber - 1].elementsCounter--;
-
-//     //             // Putting the elemtn in the front cell
-//     //             board.mainBoard[trackNumber - 2][columnNumber - 1].cellStack.push(hedgehog);
-
-//     //             // array index starts at 0;
-//     //             board.mainBoard[trackNumber - 2][columnNumber - 1].elementsDisplayerArray[board.mainBoard[trackNumber - 2][columnNumber - 1].elementsCounter] = hedgehog;
-
-//     //             board.mainBoard[trackNumber - 2][columnNumber - 1].elementsCounter++;
-
-//     //             std::this_thread::sleep_for(std::chrono::seconds(1));
-
-//     //             cout << "\n-----------------------------------------------\n";
-
-//     //             board.displayBoard();
-
-//     //             cout << "\n-----------------------------------------------\n";
-//     //             std::this_thread::sleep_for(std::chrono::seconds(1));
-//     //         }
-
-//     //         else if (userInput == 3)
-//     //         {
-//     //             if (board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top().find(name))
-//     //             {
-
-//     //                 // storing size which will be used later
-//     //                 int size = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.size();
-
-//     //                 // strogin value of hedgehog
-//     //                 string hedgehog = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top();
-//     //                 board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.pop();
-
-//     //                 // Removing the last element of array so that after movement, displaying is correct.
-//     //                 board.mainBoard[trackNumber - 1][columnNumber - 1].elementsDisplayerArray[size - 1] = '\0';
-//     //                 board.mainBoard[trackNumber - 1][columnNumber - 1].elementsCounter--;
-
-//     //                 // Putting the elemtn in the front cell
-//     //                 board.mainBoard[trackNumber][columnNumber - 1].cellStack.push(hedgehog);
-
-//     //                 // array index starts at 0;
-//     //                 board.mainBoard[trackNumber][columnNumber - 1].elementsDisplayerArray[board.mainBoard[trackNumber - 2][columnNumber].elementsCounter] = hedgehog;
-
-//     //                 board.mainBoard[trackNumber][columnNumber - 1].elementsCounter++;
-
-//     //                 std::this_thread::sleep_for(std::chrono::seconds(1));
-
-//     //                 cout << "\n-----------------------------------------------\n";
-
-//     //                 board.displayBoard();
-
-//     //                 cout << "\n-----------------------------------------------\n";
-//     //                 std::this_thread::sleep_for(std::chrono::seconds(1));
-//     //             }
-//     //         }
-
-//     //     case 2:
-//     //         cout << "\nSPIDERMAN - " << name << ", HAS CHOSEN NOT TO MOVE THEIR HEDGEHOG! HMMMM??? STRATEGY PLANNING? LET'S SEE HOW THEY DO!" << endl;
-
-//     //         // default:
-//     //     }
-//     // }
-
-//     // cout << "\nSPIDERMAN - THE MOVEMENT BY PLAYER HAS BEEN DONE. IT's TIME FOR A COMPULSORY MOVEMENT. " << name << ", WHICH HEDGEHOG ON TRACK " << diceValue << "!!! WOULD, YOU LIKE TO MOVE AHEAD? ENTER THE COLUMN NUMBER :: ";
-//     // cin >> columnNumber;
-
-//     // // if (board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.empty())
-//     // // {
-//     // //     cout << "\nSPIDERMAN - NO ELEMENTS IN THIS SECTION!\n";
-//     // // }
-//     // // else
-//     // // {
-//     // // storing size which will be used later
-//     // int size = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.size();
-//     // cout << "1";
-//     // // strogin value of hedgehog
-//     // string hedgehog = board.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top();
-//     // cout << "2";
-//     // // Removing the last element of array so that after movement, displaying is correct.
-//     // board.mainBoard[trackNumber - 1][columnNumber - 1].elementsDisplayerArray[size - 1] = '\0';
-//     // cout << "3";
-//     // // Putting the element in the front cell
-//     // board.mainBoard[trackNumber - 1][columnNumber].cellStack.push(hedgehog);
-//     // cout << "4";
-//     // // array index starts at 0;
-//     // board.mainBoard[trackNumber - 1][columnNumber].elementsDisplayerArray[board.mainBoard[trackNumber - 1][columnNumber].elementsCounter] = hedgehog;
-//     // cout << "5";
-//     // board.mainBoard[trackNumber - 1][columnNumber].elementsCounter++;
-//     // cout << "6";
-//     // // }
-
-//     return;
-// }
-
-void Player :: userWantsToMove(GameBoard &board)
-{
-
-    int userInput;
-    int trackNumber;
-    int columnNumber;
-    string hedgehogNumber;
-
-    cout << "\n\nSPIDERMAN - WHERE WOULD YOU LIKE TO MOVE YOUR PIECE? AHEAD?(1) LEFT?(2) RIGHT?(3) :: ";
-    cin >> userInput;
-
-    // Prints the location where the user's hedgehog can move!
-    printUserHhgPositions(board);
-
 }
 
-int Player :: getLocation(int choice, int trackNumber, GameBoard &board, string hedgehogNumber)
+int Player ::getLocation(int choice, int trackNumber, GameBoard &board, string hedgehogNumber)
 {
     cout << " ";
     bool looper = true;
 
     while (looper)
-    {   
+    {
         cout << " ";
         for (int i = 0; i < 9; i++)
         {
@@ -446,47 +261,239 @@ int Player :: getLocation(int choice, int trackNumber, GameBoard &board, string 
     }
 }
 
-void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &board)
+void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &board, vector<Player> &playerVector)
 {
     cout << " Inside move :: " << endl;
+
+    // storing size which will be used later
+    int size = board.mainBoard[trackNumber][columnNumber].cellStack.size();
+
+    // strogin value of hedgehog
+    string hedgehog = board.mainBoard[trackNumber][columnNumber].cellStack.top();
+
     int row, column;
     if (choice == 1)
     {
         row = trackNumber;
         column = columnNumber + 1;
     }
+    if (choice == 2)
+    {
+        row = trackNumber - 1;
+        column = columnNumber;
+    }
 
-    //             // storing size which will be used later
-    int size = board.mainBoard[trackNumber][columnNumber].cellStack.size();
+    if (choice == 3)
+    {
+        row = trackNumber + 1;
+        column = columnNumber;
+    }
 
-    //             // strogin value of hedgehog
-    string hedgehog = board.mainBoard[trackNumber][columnNumber].cellStack.top();
+    int valueForX = board.mainBoard[row][column].cellName.find("X");
+    string cellName = board.mainBoard[row][column].cellName;
 
-    //             // Popping the element since it is going to next cell
-    board.mainBoard[trackNumber][columnNumber].cellStack.pop();
+    cout << "\nValue for X :: " << valueForX;
 
-    //             // Removing the last element of array so that after movement, displaying is correct.
-    board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
-    board.mainBoard[trackNumber][columnNumber].elementsCounter--;
+    cout << "\nCELL NAME :: " << cellName << endl;
 
-    //             // Putting the element in the cell selected by user
-    board.mainBoard[row][column].cellStack.push(hedgehog);
+    // CHECK IF WE ARE AT A BLACK HOLE OR NOT
+    // FOR NOW WE ARE CONSIDERING ALL THE OBSTACLES AS BLACKHOLE
 
-    //           // array index starts at 0;
-    board.mainBoard[row][column].elementsDisplayerArray[board.mainBoard[row][column].elementsCounter] = hedgehog;
+    // X1 is for blackhole
+    if (board.mainBoard[row][column].cellName.find("BLCKH") != -1)
+    {
 
-    // increasing the size of array since the player has moved to this new cell
-    board.mainBoard[row][column].elementsCounter++;
+        cout << "\nSPIDERMAN - OH NO! " << hedgehog << " FELL INTO A BLACKHOLE! AWW YOU POOR THING!" << endl
+             << endl;
+        // Popping the element since it is going to next cell
+        board.mainBoard[trackNumber][columnNumber].cellStack.pop();
+
+        // Removing the last element of array so that after movement, displaying is correct.
+        board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
+        board.mainBoard[trackNumber][columnNumber].elementsCounter--;
+
+        cout << "\nHedgehog : " << hedgehog;
+        cout << "\nSize of vector :: " << playerVector.size();
+        for (int i = 0; i < 2; i++)
+        {
+            cout << "\nElements :: " << playerVector[i].getName() << endl;
+            cout << "\nColor :: " << playerVector[i].getColor() << endl;
+            cout << "\nSleeping Hedgehogs:: " << playerVector[i].sleepingHedgehogs << endl;
+            cout << "\nTotal HEdgehogs :: " << playerVector[i].totalHedgeHogs << endl;
+            int val = playerVector[i].getColor().find(hedgehog);
+            cout << "\nValue of bool :: " << val;
+        }
+
+        for (int i = 0; i < playerVector.size(); i++)
+        {
+            cout << "In here! ";
+            if (playerVector[i].getColor().find(hedgehog) != -1)
+            {
+                cout << "\nSleeping hedgehogs :: " << playerVector[i].sleepingHedgehogs;
+                cout << "\nTotal hedgehogs :: " << playerVector[i].totalHedgeHogs;
+                playerVector[i].sleepingHedgehogs++;
+                playerVector[i].totalHedgeHogs++;
+
+                cout << "\nADDED";
+                cout << "\nSleeping hedgehogs :: " << playerVector[i].sleepingHedgehogs;
+                cout << "\nTotal hedgehogs :: " << playerVector[i].totalHedgeHogs;
+
+                if (playerVector[i].getColor().find("1") != -1)
+                {
+                    cout << "\n i : " << i;
+                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[0].accessible;
+                    playerVector[i].hghPositionArray[0].accessible = 0;
+                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[0].accessible;
+                    break;
+                }
+                if (playerVector[i].getName().find("2") != -1)
+                {
+                    cout << "\n i : " << i;
+                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[1].accessible;
+                    playerVector[i].hghPositionArray[1].accessible = 0;
+                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[1].accessible;
+                    break;
+                }
+                if (playerVector[i].getName().find("3") != -1)
+                {
+                    cout << "\n i : " << i;
+                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[2].accessible;
+                    playerVector[i].hghPositionArray[2].accessible = 0;
+                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[2].accessible;
+                    break;
+                }
+                if (playerVector[i].getName().find("4") != -1)
+                {
+                    cout << "\n i : " << i;
+                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[3].accessible;
+                    playerVector[i].hghPositionArray[3].accessible = 0;
+                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[3].accessible;
+                    break;
+                }
+            }
+        }
+    }
+    else if (board.mainBoard[row][column].cellName.find("WORMH") != -1)
+    {
+
+        cout << "\nSPIDERMAN - " << hedgehog << " FELL INTO A WORMHOLE! BYE BYE!";
+
+        cout << "\nSPIDERMAN - "
+             << "TRANSPORTING " << hedgehog << "TO THE STARTING!";
+
+        srand(time(0));
+        int random = 1 + (rand() % 6);
+
+        // Popping the element since it is going to next cell
+        board.mainBoard[trackNumber][columnNumber].cellStack.pop();
+
+        // Removing the last element of array so that after movement, displaying is correct.
+        board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
+        board.mainBoard[trackNumber][columnNumber].elementsCounter--;
+
+        // TRANSPORTATION
+        board.mainBoard[random - 1][0].cellStack.push(hedgehog);
+
+        // array index starts at 0;
+        board.mainBoard[random - 1][0].elementsDisplayerArray[board.mainBoard[random - 1][0].elementsCounter] = hedgehog;
+
+        // increasing the size of array since the player has moved to this new cell
+        board.mainBoard[random - 1][0].elementsCounter++;
+    }
+
+    else if (board.mainBoard[row][column].cellName.find("SHLWP") != -1)
+    {
+        if (board.mainBoard[row][column].cellStack.empty() == 1)
+        {
+
+            cout << "\nSPIDERMAN - " << hedgehog << " FELL INTO A SHALLOWPIT";
+
+            cout << "\nSPIDERMAN - AW YOU POOR THING!";
+
+            cout << "\nSPIDERMAN - LOCKING PLAYER IN SHALLOW PIT! I AM SORRY DEAR PLAYER, BUT YOU CAN'T COME OUT UNTIL THE GAME ENDS!";
+        }
+
+        // Popping the element since it is going to next cell
+        board.mainBoard[trackNumber][columnNumber].cellStack.pop();
+
+        // Removing the last element of array so that after movement, displaying is correct.
+        board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
+        board.mainBoard[trackNumber][columnNumber].elementsCounter--;
+
+        // Putting the element in the cell selected by user
+        board.mainBoard[row][column].cellStack.push(hedgehog);
+
+        // array index starts at 0;
+        board.mainBoard[row][column].elementsDisplayerArray[board.mainBoard[row][column].elementsCounter] = hedgehog;
+
+        // increasing the size of array since the player has moved to this new cell
+        board.mainBoard[row][column].elementsCounter++;
+    }
+
+    // NORMAL STACKING
+    else
+    {
+        // IF IT IS A SHALLOW PIT, WE CAN'T LET THE LAST ELEMENT ESCAPE
+        // HAHAHAHHAHAHHA
+        // Configure this correctly, the hgh just jumped out
+        if (board.mainBoard[trackNumber][columnNumber].cellName.find("SHLWP") != -1)
+        {
+            if (board.mainBoard[trackNumber][columnNumber].cellStack.empty() != 1 && board.mainBoard[trackNumber][columnNumber].cellStack.size() < 2)
+            {
+
+                cout << "\nSPIDERMAN - THE HEDGEHOG CAN'T MOVE BECAUSE IT IS STUCK IN THE SHALLOWPIT! RIP " << hedgehog;
+            }
+
+            else
+            {
+                // Popping the element since it is going to next cell
+                board.mainBoard[trackNumber][columnNumber].cellStack.pop();
+
+                // Removing the last element of array so that after movement, displaying is correct.
+                board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
+                board.mainBoard[trackNumber][columnNumber].elementsCounter--;
+
+                //             // Putting the element in the cell selected by user
+                board.mainBoard[row][column].cellStack.push(hedgehog);
+
+                //           // array index starts at 0;
+                board.mainBoard[row][column].elementsDisplayerArray[board.mainBoard[row][column].elementsCounter] = hedgehog;
+
+                // increasing the size of array since the player has moved to this new cell
+                board.mainBoard[row][column].elementsCounter++;
+            }
+        }
+
+        else
+        {
+            // Popping the element since it is going to next cell
+            board.mainBoard[trackNumber][columnNumber].cellStack.pop();
+
+            //             // Removing the last element of array so that after movement, displaying is correct.
+            board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
+            board.mainBoard[trackNumber][columnNumber].elementsCounter--;
+
+            //             // Putting the element in the cell selected by user
+            board.mainBoard[row][column].cellStack.push(hedgehog);
+
+            //           // array index starts at 0;
+            board.mainBoard[row][column].elementsDisplayerArray[board.mainBoard[row][column].elementsCounter] = hedgehog;
+
+            // increasing the size of array since the player has moved to this new cell
+            board.mainBoard[row][column].elementsCounter++;
+            cout << "\n";
+            //             std::this_thread::sleep_for(std::chrono::seconds(1));
+
+            // cout << "\n-----------------------------------------------\n";
+
+            // cout << "\n-----------------------------------------------\n";
+            //             std::this_thread::sleep_for(std::chrono::seconds(1));
+            //         }
+        }
+    }
     cout << "\n";
-    //             std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    // cout << "\n-----------------------------------------------\n";
 
     board.displayBoard();
-
-    // cout << "\n-----------------------------------------------\n";
-    //             std::this_thread::sleep_for(std::chrono::seconds(1));
-    //         }
 }
 
 void Player ::printUserHhgPositions(GameBoard &board)
@@ -540,53 +547,19 @@ void Player ::printUserHhgPositions(GameBoard &board)
 void Player ::printPositions()
 {
     cout << "\nSPIDERMAN - Your hedgehogs are available at the following tracks: ";
+    int j = -1;
     for (int i = 0; i < 4; i++)
     {
         if (hghPositionArray[i].accessible)
         {
             // Adding plus 1 because we are storing row number in the parameter and for the user track numbers are starting from 1
             cout << "\nTrack " << hghPositionArray[i].trackNumber + 1;
+            j++;
         }
     }
+
+    if (j == -1)
+    {
+        cout << "\nSPIDERMAN - LOOKS LIKE NO HEDGEHOGS ARE PRESENT FOR THE PLAYER!";
+    }
 }
-
-// // void Player ::checkUserInputForTrackMovement(int trackNumber)
-// // {
-// //     bool presence = false;
-
-// //     while (!presence)
-// //     {
-
-// //         for (int i = 0; i < sizeOftrackPresenceArray; i++)
-// //         {
-// //             if (trackPresenceVector[i] == trackNumber)
-// //             {
-// //                 presence = true;
-// //                 cout << "\nSPIDERMAN - NICE SELECTION " << name << "!";
-
-// //                 //deallocating the array, since it's dynamic and resetting the size to 0 for the next loop.
-// //                 trackPresenceVector.clear();
-// //                 sizeOftrackPresenceArray = 0;
-// //                 return;
-// //             }
-// //         }
-
-// //         cout << "\nSPIDERMAN - " << name << " , please choose the correct track number. Don't be a smarty! Spiderman'e eyes are watching you!!";
-// //     }
-// // }
-
-//  void Player ::placingOfHedgehog(int trackNumber, int userInput, GameBoard &board)
-// {
-
-//     cout << "-";
-//     switch (userInput)
-//     {
-
-//     // AHEAD MOVEMENT
-//     case 1:
-//         cout << "-";
-//         move(userInput, trackNumber, columnNumber, board);
-
-//     default:
-//     }
-// }

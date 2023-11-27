@@ -6,6 +6,7 @@ class HghPositions{
         int trackNumber;
         int columnNumber;
         bool accessible = false;
+        int atInitialPosition = 1;
 };
 
 #endif

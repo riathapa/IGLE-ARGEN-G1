@@ -31,15 +31,14 @@ public:
 
     void print(vector<Player> &players, int numberOfPlayers);
 
-    // I don't remember
+    // Keep track of isnertion at set in the main.cpp
     int playerCounter = 1;
-    bool fellIntoBlackHole = false;
 
     // Increment everytime a hedgehog crosses a finish line.
     int finishedHedgehogs = 0;
 
     //
-    int totalHEdgeHogs = 4;
+    int totalHedgeHogs = 4;
 
     // Hedgehogs that fell into blackhole
     int sleepingHedgehogs = 0;
@@ -65,7 +64,7 @@ public:
     void userWantsToMove(GameBoard &board);
     void placingOfHedgehog(int trackNumber, int userInput, GameBoard &board);
     int getLocation(int choice, int trackNumber, GameBoard &board, string hedgehogNumber);
-    void move(int choice, int trackNumber, int columnNumber,GameBoard &board);
+    void move(int choice, int trackNumber, int columnNumber,GameBoard &board, vector<Player> &playerVector);
 
     void printUserHhgPositions(GameBoard &board);
     void printPositions();

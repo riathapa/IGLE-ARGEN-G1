@@ -22,6 +22,8 @@ public:
 
     Cells * * mainBoard;
 
+    bool checkPresenceOfHedgeHog(int trackNumber);
+
 private:
     int tracks;
     int columns;

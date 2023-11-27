@@ -55,7 +55,7 @@ void GameBoard :: placeObstacles() {
 
 //MAKE OBSTACLES RANDOM
 
-    vector<int> columnIndices;
+    // vector<int> columnIndices;
     // columnIndices.resize(columns - 3, columns);
    // Exclude first, last, and second columns
     // vector<int> columnIndices;
@@ -69,17 +69,32 @@ void GameBoard :: placeObstacles() {
     // std::mt19937 g(rd());
     // std::shuffle(columnIndices.begin(), columnIndices.end(), g);
     // cout << "\n1";
-    int j = 2; 
-    for (int t = 0; t < tracks; ++t)
-    {
-        // Ensure no two obstacles are in the same column
-        // Cycle through shuffled indices
-        // int obstacleColumn = columnIndices[t % columnIndices.size()];
+    // int j = 2; 
+    // for (int t = 0; t < tracks; ++t)
+    // {
 
-        // Place obstacle with a unique label
-        mainBoard[t][j].cellName = "X";
-        j++;
-    }
+    //     if(t==3){
+    //         continue;
+    //     }
+    //     if(t==1){
+    //         continue;
+    //     }
+    //     // Ensure no two obstacles are in the same column
+    //     // Cycle through shuffled indices
+    //     // int obstacleColumn = columnIndices[t % columnIndices.size()];
+
+    //     // Place obstacle with a unique label
+    //     mainBoard[t][j].cellName = "X1";
+    //     j++;
+    // }
+
+    mainBoard[0][2].cellName = "BLCKH";
+    mainBoard[1][6].cellName = "WORMH";
+    mainBoard[2][4].cellName = "SHLWP";
+    mainBoard[3][7].cellName = "DEEPP";
+    mainBoard[4][5].cellName = "WORMH";
+    mainBoard[5][3].cellName = "BLCKH";
+
 }
 
 void GameBoard::displayBoard() {
@@ -146,5 +161,17 @@ void GameBoard::placeHedgehogInStartColumn(int track, const string& color, int p
 
         //Adding cout because the program starts running out of memory idk why
         cout << " "<<endl;
+
+}
+
+bool GameBoard :: checkPresenceOfHedgeHog(int trackNumber){
+    for(int i=0; i<9; i++){
+        if(mainBoard[trackNumber][i].cellStack.empty() == 0){
+            cout << "\nReturning true";
+            return true;
+        }
+    }
+
+    return false;
 
 }
