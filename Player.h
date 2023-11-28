@@ -17,6 +17,8 @@ private:
     string name;
     string color;
     static set<std::string> availableColors;
+
+    //This variable helps in tracking whether the user's hedgehog has moved once or not. Since we don't allow hedgehogs to move sideways in the first step.
     static set<std::string> usedNames; // To keep track of names already used
 
     int playerWantsToMoveHedgeHogNumber;
@@ -26,6 +28,7 @@ private:
 
 public:
 
+    int intialMovement = -1;
     void flush();
     void initializePlayers(vector<Player> &players, int numberOfPlayers);
 

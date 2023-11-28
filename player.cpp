@@ -231,7 +231,7 @@ int Player ::movement(GameBoard &board, int diceValue)
     // USER INPUT
     int userInput;
 
-    cout << "\nSPIDERMAN - WOULD YOU LIKE TO MOVE YOUR PIECE ON TOP? BEFORE THE COMPULSARY MOVEMENT? PRESS 1 FOR YES. PRESS 2 FOR NO :: ";
+    cout << "\nSPIDERMAN - THIS IS AN OPTIONAL STEP. WOULD YOU LIKE TO MOVE YOUR PIECE ON TOP? BEFORE THE COMPULSARY MOVEMENT? PRESS 1 FOR YES. PRESS 2 FOR NO :: ";
     cin >> userInput;
 
     return userInput;
@@ -271,12 +271,15 @@ void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &boa
     // strogin value of hedgehog
     string hedgehog = board.mainBoard[trackNumber][columnNumber].cellStack.top();
 
+    string hghSubString = hedgehog.substr(0, hedgehog.size()-1);
+
     int row, column;
     if (choice == 1)
     {
         row = trackNumber;
         column = columnNumber + 1;
     }
+
     if (choice == 2)
     {
         row = trackNumber - 1;
@@ -289,20 +292,12 @@ void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &boa
         column = columnNumber;
     }
 
-    int valueForX = board.mainBoard[row][column].cellName.find("X");
-    string cellName = board.mainBoard[row][column].cellName;
-
-    cout << "\nValue for X :: " << valueForX;
-
-    cout << "\nCELL NAME :: " << cellName << endl;
-
     // CHECK IF WE ARE AT A BLACK HOLE OR NOT
     // FOR NOW WE ARE CONSIDERING ALL THE OBSTACLES AS BLACKHOLE
 
     // X1 is for blackhole
     if (board.mainBoard[row][column].cellName.find("BLCKH") != -1)
     {
-
         cout << "\nSPIDERMAN - OH NO! " << hedgehog << " FELL INTO A BLACKHOLE! AWW YOU POOR THING!" << endl
              << endl;
         // Popping the element since it is going to next cell
@@ -312,77 +307,45 @@ void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &boa
         board.mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
         board.mainBoard[trackNumber][columnNumber].elementsCounter--;
 
-        cout << "\nHedgehog : " << hedgehog;
-        cout << "\nSize of vector :: " << playerVector.size();
-        for (int i = 0; i < 2; i++)
-        {
-            cout << "\nElements :: " << playerVector[i].getName() << endl;
-            cout << "\nColor :: " << playerVector[i].getColor() << endl;
-            cout << "\nSleeping Hedgehogs:: " << playerVector[i].sleepingHedgehogs << endl;
-            cout << "\nTotal HEdgehogs :: " << playerVector[i].totalHedgeHogs << endl;
-            int val = playerVector[i].getColor().find(hedgehog);
-            cout << "\nValue of bool :: " << val;
-        }
-
         for (int i = 0; i < playerVector.size(); i++)
         {
-            cout << "In here! ";
-            if (playerVector[i].getColor().find(hedgehog) != -1)
+            if (playerVector[i].getColor().find(hghSubString) != -1)
             {
-                cout << "\nSleeping hedgehogs :: " << playerVector[i].sleepingHedgehogs;
-                cout << "\nTotal hedgehogs :: " << playerVector[i].totalHedgeHogs;
+                //Falling into blackhole means the hedgehog has died
+                //So if a hedgehog dies, that means the total numebr of hedgehogs will decrease
                 playerVector[i].sleepingHedgehogs++;
-                playerVector[i].totalHedgeHogs++;
+                playerVector[i].totalHedgeHogs--;
 
-                cout << "\nADDED";
-                cout << "\nSleeping hedgehogs :: " << playerVector[i].sleepingHedgehogs;
-                cout << "\nTotal hedgehogs :: " << playerVector[i].totalHedgeHogs;
-
-                if (playerVector[i].getColor().find("1") != -1)
-                {
-                    cout << "\n i : " << i;
-                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[0].accessible;
+                if(hedgehog.find("1") != -1){
                     playerVector[i].hghPositionArray[0].accessible = 0;
-                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[0].accessible;
                     break;
                 }
-                if (playerVector[i].getName().find("2") != -1)
-                {
-                    cout << "\n i : " << i;
-                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[1].accessible;
+                else if(hedgehog.find("2") != -1){
                     playerVector[i].hghPositionArray[1].accessible = 0;
-                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[1].accessible;
                     break;
                 }
-                if (playerVector[i].getName().find("3") != -1)
-                {
-                    cout << "\n i : " << i;
-                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[2].accessible;
+                else if(hedgehog.find("3") != -1){
                     playerVector[i].hghPositionArray[2].accessible = 0;
-                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[2].accessible;
                     break;
                 }
-                if (playerVector[i].getName().find("4") != -1)
-                {
-                    cout << "\n i : " << i;
-                    cout << "\nValue of bool :: " << playerVector[i].hghPositionArray[3].accessible;
+                else if(hedgehog.find("4") != -1){
                     playerVector[i].hghPositionArray[3].accessible = 0;
-                    cout << "\nCHANGED THE VALUE :: " << playerVector[i].hghPositionArray[3].accessible;
                     break;
                 }
             }
         }
     }
+
     else if (board.mainBoard[row][column].cellName.find("WORMH") != -1)
     {
 
-        cout << "\nSPIDERMAN - " << hedgehog << " FELL INTO A WORMHOLE! BYE BYE!";
-
-        cout << "\nSPIDERMAN - "
-             << "TRANSPORTING " << hedgehog << "TO THE STARTING!";
+        cout << "\nSPIDERMAN - " << hedgehog << " FELL INTO A WORMHOLE! BYE BYE!\n";
 
         srand(time(0));
         int random = 1 + (rand() % 6);
+
+        cout << "\nSPIDERMAN - "
+             << "TRANSPORTING " << hedgehog << " TO THE STARTING OF TRACK " << random << endl;
 
         // Popping the element since it is going to next cell
         board.mainBoard[trackNumber][columnNumber].cellStack.pop();
@@ -429,7 +392,9 @@ void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &boa
         // increasing the size of array since the player has moved to this new cell
         board.mainBoard[row][column].elementsCounter++;
     }
+    else if (board.mainBoard[row][column].cellName.find("DEEPP") != -1){
 
+    }
     // NORMAL STACKING
     else
     {
@@ -489,6 +454,10 @@ void Player ::move(int choice, int trackNumber, int columnNumber, GameBoard &boa
             // cout << "\n-----------------------------------------------\n";
             //             std::this_thread::sleep_for(std::chrono::seconds(1));
             //         }
+
+            if(intialMovement == -1){
+                intialMovement = 0;
+            }
         }
     }
     cout << "\n";
@@ -550,6 +519,7 @@ void Player ::printPositions()
     int j = -1;
     for (int i = 0; i < 4; i++)
     {
+        //SHOW THEM IN ORDER!! RIGHT NOW THEY ARE DISASSEMBLED
         if (hghPositionArray[i].accessible)
         {
             // Adding plus 1 because we are storing row number in the parameter and for the user track numbers are starting from 1

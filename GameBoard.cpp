@@ -9,10 +9,11 @@
 #include <iterator>
 #include <numeric>
 #include <iomanip>
-#include<stack>
+#include <stack>
 using namespace std;
 
-GameBoard::GameBoard(int tracks, int columns) : tracks(tracks), columns(columns) {
+GameBoard::GameBoard(int tracks, int columns) : tracks(tracks), columns(columns)
+{
     tracks = tracks;
     columns = columns;
     // board.resize(tracks);
@@ -21,8 +22,8 @@ GameBoard::GameBoard(int tracks, int columns) : tracks(tracks), columns(columns)
     // }
 }
 
-
-void GameBoard::initializeBoard() {
+void GameBoard::initializeBoard()
+{
 
     mainBoard = new Cells *[tracks];
 
@@ -31,8 +32,7 @@ void GameBoard::initializeBoard() {
         mainBoard[i] = new Cells[columns];
     }
 
-
-   for (int t = 0; t < tracks; ++t)
+    for (int t = 0; t < tracks; ++t)
     {
 
         mainBoard[t][0].cellName = "T" + to_string(t + 1) + "S"; // Start squares
@@ -48,18 +48,18 @@ void GameBoard::initializeBoard() {
         // mainBoard[t][columns - 1].cellName = "T" + to_string(t + 1) + "Z"; // Goal squares
         mainBoard[t][columns - 1].cellName = "| FINISH LINE | "; // Goal squares
     }
-
 }
 
-void GameBoard :: placeObstacles() {
+void GameBoard ::placeObstacles()
+{
 
-//MAKE OBSTACLES RANDOM
+    // MAKE OBSTACLES RANDOM
 
     // vector<int> columnIndices;
     // columnIndices.resize(columns - 3, columns);
-   // Exclude first, last, and second columns
+    // Exclude first, last, and second columns
     // vector<int> columnIndices;
-    // cout << ""; 
+    // cout << "";
     // columnIndices.resize(columns - 3);
 
     // // Initialize with numbers from 2 to columns - 2
@@ -69,7 +69,7 @@ void GameBoard :: placeObstacles() {
     // std::mt19937 g(rd());
     // std::shuffle(columnIndices.begin(), columnIndices.end(), g);
     // cout << "\n1";
-    // int j = 2; 
+    // int j = 2;
     // for (int t = 0; t < tracks; ++t)
     // {
 
@@ -88,22 +88,34 @@ void GameBoard :: placeObstacles() {
     //     j++;
     // }
 
-    mainBoard[0][2].cellName = "BLCKH";
+    mainBoard[0][1].cellName = "WORMH";
     mainBoard[1][6].cellName = "WORMH";
     mainBoard[2][4].cellName = "SHLWP";
     mainBoard[3][7].cellName = "DEEPP";
     mainBoard[4][5].cellName = "WORMH";
     mainBoard[5][3].cellName = "BLCKH";
-
 }
 
-void GameBoard::displayBoard() {
-    
+void GameBoard::displayBoard()
+{
+
     for (int i = 0; i < tracks; i++)
     {
         for (int j = 0; j < columns; j++)
         {
-            if (mainBoard[i][j].elementsCounter == 0)
+            if (mainBoard[i][j].cellName.find("SHLWP") != -1)
+            {
+                if (mainBoard[i][j].elementsCounter == 0)
+                {
+                    cout << mainBoard[i][j].cellName << "               ";
+                }
+
+                else {
+                    cout << mainBoard[i][j].cellName << "+";
+                    mainBoard[i][j].displayElementsOnBoard();
+                }
+            }
+            else if (mainBoard[i][j].elementsCounter == 0)
             {
                 cout << mainBoard[i][j].cellName << "               ";
             }
@@ -113,9 +125,9 @@ void GameBoard::displayBoard() {
             }
         }
 
-        cout << endl << endl;
+        cout << endl
+             << endl;
     }
-
 }
 
 // // void GameBoard::dBoard() {
@@ -131,10 +143,6 @@ void GameBoard::displayBoard() {
 // //     }
 // // }
 
-
-
-
-
 // void GameBoard::placeHedgehogAt(int track, const std::string& color) {
 //     for (int level = 0; level < columns; ++level) {
 //         if (board[track][level].empty() || level == 0) {
@@ -144,34 +152,34 @@ void GameBoard::displayBoard() {
 //     }
 // }
 
-
-void GameBoard::placeHedgehogInStartColumn(int track, const string& color, int playerCounter, HghPositions hghPositionArray []) {
+void GameBoard::placeHedgehogInStartColumn(int track, const string &color, int playerCounter, HghPositions hghPositionArray[])
+{
     // Place hedgehog in the first available spot in the start column
-        //This stack maintains the elements
-        mainBoard[track][0].cellStack.push(color + to_string(playerCounter));
+    // This stack maintains the elements
+    mainBoard[track][0].cellStack.push(color + to_string(playerCounter));
 
-        //This array is uses to show the players the placement of all their hedgehogs and in order, with the right side representing the top of the stack
-        mainBoard[track][0].elementsDisplayerArray[mainBoard[track][0].elementsCounter] = color + to_string(playerCounter);
+    // This array is uses to show the players the placement of all their hedgehogs and in order, with the right side representing the top of the stack
+    mainBoard[track][0].elementsDisplayerArray[mainBoard[track][0].elementsCounter] = color + to_string(playerCounter);
 
-        mainBoard[track][0].elementsCounter++; 
+    mainBoard[track][0].elementsCounter++;
 
-        //Tracking the position of the hedgehog also and saving it in a dynamic array made of class HghPositions. Declared in Player class.
-        hghPositionArray[playerCounter-1].trackNumber = track-1;
-        hghPositionArray[playerCounter-1].columnNumber = 0;
+    // Tracking the position of the hedgehog also and saving it in a dynamic array made of class HghPositions. Declared in Player class.
+    hghPositionArray[playerCounter - 1].trackNumber = track - 1;
+    hghPositionArray[playerCounter - 1].columnNumber = 0;
 
-        //Adding cout because the program starts running out of memory idk why
-        cout << " "<<endl;
-
+    // Adding cout because the program starts running out of memory idk why
+    cout << " " << endl;
 }
 
-bool GameBoard :: checkPresenceOfHedgeHog(int trackNumber){
-    for(int i=0; i<9; i++){
-        if(mainBoard[trackNumber][i].cellStack.empty() == 0){
-            cout << "\nReturning true";
+bool GameBoard ::checkPresenceOfHedgeHog(int trackNumber)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        if (mainBoard[trackNumber][i].cellStack.empty() == 0)
+        {
             return true;
         }
     }
 
     return false;
-
 }
