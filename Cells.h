@@ -1,15 +1,13 @@
 #ifndef CELLS_H_
 #define CELLS_H_
 
-#include "Player.h"
-
 #include <stack>
 #include<queue>
 #include <string>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
-
 class Cells{
     
     public:
@@ -21,9 +19,8 @@ class Cells{
         queue<string> deepPit;
         int sizeOfDeepPit = 0 ;
 
-        bool finishLine = false;
-
         void displayElementsOnBoard();
+        void displayElementsOnBoard(ofstream &ofObj);
 };
 
 #endif

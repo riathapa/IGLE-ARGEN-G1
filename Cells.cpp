@@ -16,3 +16,16 @@ void Cells :: displayElementsOnBoard(){
         
     }
 }
+
+void Cells :: displayElementsOnBoard(ofstream &ofObj){
+    for(int i = 0; i<elementsCounter; i++){
+
+        if(i < elementsCounter && i > elementsCounter -2){
+            ofObj << elementsDisplayerArray[i] << "   ";
+        }
+        else {
+            ofObj << elementsDisplayerArray[i] << ",";
+        }
+        
+    }
+}

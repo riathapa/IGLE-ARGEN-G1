@@ -8,6 +8,7 @@ using namespace std;
 
 #include "Cells.h"
 #include "HghPositions.h"
+#include "Square.h"
 
 class Square;
 class Player;
@@ -46,7 +47,7 @@ public:
 
     void move(int choice, int trackNumber, int columnNumber, Player &player, vector<Player> &playerVector);
 
-    void printUserHhgPositionsInTheTrack(Player & player, int trackNumber);
+    void printUserHhgPositionsInTheTrack(Player &player, int trackNumber);
 
 private:
     int tracks;

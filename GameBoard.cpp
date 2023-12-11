@@ -11,6 +11,7 @@
 #include <numeric>
 #include <iomanip>
 #include <stack>
+#include <fstream>
 using namespace std;
 
 GameBoard::GameBoard(int tracks, int columns) : tracks(tracks), columns(columns)
@@ -58,53 +59,50 @@ void GameBoard::initializeBoard()
         // Goal squares
         mainBoard[t][columns - 1].cellName = "| FINISH LINE | "; // Goal squares
     }
-
-    // DELETE LATER!
-    //  mainBoard[2][2].cellName = "| FINISH LINE | ";
-    //  mainBoard[2][2].finishLine = true;
-    //  mainBoard[3][2].cellName = "| FINISH LINE | ";
-    //  mainBoard[3][2].finishLine = true;
-    //  mainBoard[4][2].cellName = "| FINISH LINE | ";
-    //  mainBoard[4][2].finishLine = true;
-    //  mainBoard[5][2].cellName = "| FINISH LINE | ";
-    //  mainBoard[5][2].finishLine = true;
-    //  mainBoard[6][2].cellName = "| FINISH LINE | ";
-    //  mainBoard[6][2].finishLine = true;
-    //  mainBoard[1][2].cellName = "| FINISH LINE | ";
-    //  mainBoard[1][2].finishLine = true;
 }
 
 // OBSTACLES HAVE BEEN HARD CODED
 void GameBoard ::placeObstacles()
 {
-    mainBoard[1][2].cellName = "DEEPP";
+    mainBoard[1][3].cellName = "BLCK";
     mainBoard[2][7].cellName = "WORMH";
     mainBoard[3][5].cellName = "SHLWP";
-    mainBoard[4][8].cellName = "WORMH";
-    mainBoard[5][6].cellName = "WORMH";
-    mainBoard[6][4].cellName = "BLCKH";
+    mainBoard[4][6].cellName = "SHLWP";
+    mainBoard[5][4].cellName = "BLCKH";
+    mainBoard[6][8].cellName = "DEEPP";
 }
 
 void GameBoard::displayBoard()
 {
+    ofstream ofObj("output.txt");
     for (int i = 0; i < tracks; i++)
     {
         for (int j = 0; j < columns; j++)
         {
             cout << setw(9);
-            if (mainBoard[i][j].cellName.find("SHLWP") != -1)
+
+            if (mainBoard[i][j].cellName.find("| FINISH LINE | ") != -1)
+            {
+                cout << mainBoard[i][j].cellName << "               ";
+                ofObj << mainBoard[i][j].cellName << "               ";
+            }
+
+            else if (mainBoard[i][j].cellName.find("SHLWP") != -1)
             {
                 cout << setw(10);
                 if (mainBoard[i][j].elementsCounter == 0)
                 {
                     cout << mainBoard[i][j].cellName << "               ";
+                    ofObj << mainBoard[i][j].cellName << "               ";
                     cout << setw(10);
                 }
 
                 else
                 {
                     cout << mainBoard[i][j].cellName << "+";
+                    ofObj << mainBoard[i][j].cellName << "+";
                     mainBoard[i][j].displayElementsOnBoard();
+                    mainBoard[i][j].displayElementsOnBoard(ofObj);
                     cout << setw(10);
                 }
             }
@@ -114,6 +112,7 @@ void GameBoard::displayBoard()
                 if (mainBoard[i][j].elementsCounter == 0)
                 {
                     cout << mainBoard[i][j].cellName << "               ";
+                    ofObj << mainBoard[i][j].cellName << "               ";
                     cout << setw(10);
                     ;
                 }
@@ -121,17 +120,21 @@ void GameBoard::displayBoard()
                 else
                 {
                     cout << mainBoard[i][j].cellName << "+";
+                    ofObj << mainBoard[i][j].cellName << "+";
                     mainBoard[i][j].displayElementsOnBoard();
+                    mainBoard[i][j].displayElementsOnBoard(ofObj);
                     cout << setw(10);
                 }
             }
             else if (mainBoard[i][j].elementsCounter == 0)
             {
                 cout << mainBoard[i][j].cellName << "               ";
+                ofObj << mainBoard[i][j].cellName << "               ";
             }
             else
             {
                 mainBoard[i][j].displayElementsOnBoard();
+                mainBoard[i][j].displayElementsOnBoard(ofObj);
                 cout << setw(10);
             }
         }
@@ -140,28 +143,6 @@ void GameBoard::displayBoard()
              << endl;
     }
 }
-
-// // void GameBoard::dBoard() {
-// //     for (const auto& row : board) {
-// //         for (const auto& stack : row) {
-// //             if (!stack.empty()) {
-// //                 std::cout << std::setw(5) << stack.top(); // Display top of the stack
-// //             } else {
-// //                 std::cout << std::setw(5) << " "; // Display placeholder for empty stack
-// //             }
-// //         }
-// //         std::cout << std::endl;
-// //     }
-// // }
-
-// void GameBoard::placeHedgehogAt(int track, const std::string& color) {
-//     for (int level = 0; level < columns; ++level) {
-//         if (board[track][level].empty() || level == 0) {
-//             board[track][level].push(color); // Place hedgehog in the first empty spot
-//             break;
-//         }
-//     }
-// }
 
 void GameBoard::placeHedgehogInStartColumn(int track, const string &color, int playerCounter, HghPositions hghPositionArray[])
 {
@@ -188,18 +169,9 @@ bool GameBoard ::checkPresenceOfHedgeHog(int trackNumber)
     {
         if (mainBoard[trackNumber][i].cellStack.empty() != 1)
         {
-            cout << "\ni :: " << i << endl;
-            cout << "\nNumber of elements :: " << mainBoard[trackNumber][i].elementsCounter << endl;
-            cout << endl;
-            for (int j = 0; j < mainBoard[trackNumber][i].elementsCounter; j++)
-            {
-                cout << mainBoard[trackNumber][i].elementsDisplayerArray[j] << endl;
-            }
-            cout << "\nRETURNING TRUE" << endl;
             return true;
         }
     }
-    cout << "\nRETURNING FALSE" << endl;
     return false;
 }
 
@@ -232,7 +204,7 @@ int GameBoard ::checkTrackEligibility(int &trackNumber, int userChoice, Player p
             bool l = true;
             while (l)
             {
-                cout << "\nSPIDERMAN - FUNNY OF YOU TO MOVE YOUR HEDGEHOG OUT OF THE BOARD " << player.getName() << ". CHOOSE A PROPER TRACK. YOU CAN'T MOVE TO LEFT! :: ";
+                cout << "\nSPIDERMAN - FUNNY OF YOU TO MOVE ANY HEDGEHOG OUT OF THE BOARD " << player.getName() << ". CHOOSE A PROPER TRACK. YOU CAN'T MOVE TO LEFT! :: ";
 
                 cin >> trackNumber;
 
@@ -255,7 +227,7 @@ int GameBoard ::checkTrackEligibility(int &trackNumber, int userChoice, Player p
             bool l = true;
             while (l)
             {
-                cout << "\nSPIDERMAN - FUNNY OF YOU TO MOVE YOUR HEDGEHOG OUT OF THE BOARD " << player.getName() << ". CHOOSE A PROPER TRACK. YOU CAN'T MOVE TO RIGHT! :: ";
+                cout << "\nSPIDERMAN - FUNNY OF YOU TO MOVE ANY HEDGEHOG OUT OF THE BOARD " << player.getName() << ". CHOOSE A PROPER TRACK. YOU CAN'T MOVE TO RIGHT! :: ";
 
                 cin >> trackNumber;
 
@@ -289,18 +261,20 @@ bool GameBoard ::checkIfHedgehogCanBeMoved(int trackNumber, int &columnNumber, P
 
 bool GameBoard ::foundNothing(int trackNumber, int &columnNumber, Player &player, int choice)
 {
-    if(choice ==1){
-    if (mainBoard[trackNumber][columnNumber].cellStack.empty() == 1 || mainBoard[trackNumber][columnNumber].cellStack.top().find(player.getColor()) == -1)
+    if (choice == 1)
     {
-        checkIfHedgehogCanBeMoved(trackNumber, columnNumber, player);
-    }
+        if (mainBoard[trackNumber][columnNumber].cellStack.empty() == 1 || mainBoard[trackNumber][columnNumber].cellStack.top().find(player.getColor()) == -1)
+        {
+            checkIfHedgehogCanBeMoved(trackNumber, columnNumber, player);
+        }
     }
 
-    if(choice ==2){
+    if (choice == 2)
+    {
         if (mainBoard[trackNumber][columnNumber].cellStack.empty() == 1)
-                {
-                    cellStackIsEmpty(trackNumber, columnNumber);
-                }
+        {
+            cellStackIsEmpty(trackNumber, columnNumber);
+        }
     }
     return false;
 }
@@ -325,7 +299,8 @@ void GameBoard ::playerTryingToMoveHedggehogFromDeepPit(int trackNumber, int &co
         bool l = true;
         while (l)
         {
-            cout << "\nSPIDERMAN - YOU CANNOT MOVE YOUR HEDGEHOG OUT OF A DEEP PIT, PLAYER! CHOOSE SOME OTHER COLUMN :: ";
+            cout << "\nSPIDERMAN - NU UH DEAR! YOU CAN'T MOVE YOUR HEDGEHOG! IT's TRAPPED IN A DEEP PIT. GOOD HEAVENS, WAIT FOR YOUR LUCK TO TURN AROUND!";
+            cout << "\n\nSPIDERMAN - CHOOSE FROM THE COLUMNS MENTIONED ABOVE :: ";
             cin >> columnNumber;
 
             if (mainBoard[trackNumber][columnNumber].cellName != "DEEPP")
@@ -358,8 +333,8 @@ int GameBoard ::checkIfTrackNumberIsCorrect(int trackNumber)
 
     while (true)
     {
-        std::cout << "\nSPIDERMAN - "
-                  << ", Please choose the correct track number. [1-6] :: ";
+        cout << "\nSPIDERMAN - "
+             << "PLEASE CHOOSE THE CORRECT TRACK NUMBER. [1-6] :: ";
         cin >> trackNumber;
 
         if (trackNumber >= 1 || trackNumber <= 6)
@@ -374,9 +349,8 @@ int GameBoard ::checkIfHedgehogPlacementIsCorrect(int placement, string name, st
 
     while (true)
     {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
         cout << "\n"
-             << "SPIDERMAN - " << name << ", choose another track. We need to fill the whole column of track in order to start jumping on other hedgehogs :p :: ";
+             << "SPIDERMAN - " << name << ", CHOOSE ANOTHER TRACK BECAUSE WE CAN ONLY SIT ON OTHER HEDGEHOGS ONCE THE COLUMN IS FILLED:: ";
         cin >> placement;
 
         if (numset.find(placement) == numset.end())
@@ -389,8 +363,8 @@ void GameBoard::placeHedgehogs(Player &player, set<int> &numset, int loopCounter
 {
     int track;
     cout << endl;
-    // std::cout << "SPIDERMAN - " << name << ", on which track would you like to place your hedgehog [1-6] :: ";
-    std::cin >> track;
+    cout << "\n\nSPIDERMAN - " << player.getName() << " ON WHICH TRACK WOULD YOU LIKE TO PLACE YOUR HEDGEHOG :: ";
+    cin >> track;
 
     // Validate track number
     if (track < 1 || track > 6)
@@ -421,11 +395,9 @@ void GameBoard::placeHedgehogs(Player &player, set<int> &numset, int loopCounter
 
     int slotCall = 0 + (rand() % hoorahs.size());
 
-    // std::this_thread::sleep_for(std::chrono::seconds(1));
-    // cout << "\nSPIDERMAN - " << hoorahs[slotCall] << " " << name << endl
-    //      << endl;
+    cout << "\nSPIDERMAN - " << hoorahs[slotCall] << " " << player.getName() << endl
+         << endl;
 
-    // std::this_thread::sleep_for(std::chrono::seconds(1));
     if (player.playerCounter < 4)
     {
         player.playerCounter++;
@@ -435,10 +407,7 @@ void GameBoard::placeHedgehogs(Player &player, set<int> &numset, int loopCounter
 // // HANDLES THE MOVEMENT OF THE HEDGEHOG
 int GameBoard ::movement(int diceValue)
 {
-    //     std::this_thread::sleep_for(std::chrono::seconds(1));
     cout << "\nSPIDERMAN - DICE VALUE :: " << diceValue << endl;
-
-    //     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     // USER INPUT
     int userInput;
@@ -457,12 +426,10 @@ void GameBoard ::printUserHhgPositions(Player &player)
         {
             if (mainBoard[i][j].cellName == "DEEPP")
             {
-                cout << "\n\nTHIS IS A DEEP PIT!";
                 continue;
             }
             else if (mainBoard[i][j].cellName == "SHLWP")
             {
-                cout << "\n\nTHIS IS A SHALLOW PIT!";
                 continue;
             }
 
@@ -473,7 +440,6 @@ void GameBoard ::printUserHhgPositions(Player &player)
                     if (mainBoard[i][j].cellStack.top().find("1") != -1)
                     {
                         player.hghPositionArray[0].trackNumber = i;
-                        cout << "\nValue at 1 :: " << player.hghPositionArray[0].trackNumber;
                         player.hghPositionArray[0].columnNumber = j;
                         player.hghPositionArray[0].accessible = true;
                         continue;
@@ -481,7 +447,6 @@ void GameBoard ::printUserHhgPositions(Player &player)
                     else if (mainBoard[i][j].cellStack.top().find("2") != -1)
                     {
                         player.hghPositionArray[1].trackNumber = i;
-                        cout << "\nValue at 2 :: " << player.hghPositionArray[1].trackNumber;
                         player.hghPositionArray[1].columnNumber = j;
                         player.hghPositionArray[1].accessible = true;
                         continue;
@@ -489,7 +454,6 @@ void GameBoard ::printUserHhgPositions(Player &player)
                     else if (mainBoard[i][j].cellStack.top().find("3") != -1)
                     {
                         player.hghPositionArray[2].trackNumber = i;
-                        cout << "\nValue at 3 :: " << player.hghPositionArray[2].trackNumber;
                         player.hghPositionArray[2].columnNumber = j;
                         player.hghPositionArray[2].accessible = true;
                         continue;
@@ -497,7 +461,6 @@ void GameBoard ::printUserHhgPositions(Player &player)
                     else if (mainBoard[i][j].cellStack.top().find("4") != -1)
                     {
                         player.hghPositionArray[3].trackNumber = i;
-                        cout << "\nValue at 4 :: " << player.hghPositionArray[3].trackNumber;
                         player.hghPositionArray[3].columnNumber = j;
                         player.hghPositionArray[3].accessible = true;
                         continue;
@@ -523,18 +486,18 @@ void GameBoard ::printPositions(Player &player)
         if (player.hghPositionArray[i].accessible)
         {
             // Adding plus 1 because we are storing row number in the parameter and for the user track numbers are starting from 1
-            setOfTracks.insert("Track " + to_string(player.hghPositionArray[i].trackNumber) + ", Column " + to_string(player.hghPositionArray[i].columnNumber));
+            setOfTracks.insert("TRACK " + to_string(player.hghPositionArray[i].trackNumber) + ", COLUMN " + to_string(player.hghPositionArray[i].columnNumber));
             j++;
         }
     }
 
     if (j == -1)
     {
-        cout << "\nSPIDERMAN - LOOKS LIKE NO HEDGEHOGS ARE PRESENT FOR THE PLAYER!";
+        cout << "\nSPIDERMAN - LOOKS LIKE NO HEDGEHOGS ARE PRESENT TO MOVE " << endl;
         return;
     }
 
-    cout << "\nSPIDERMAN - Your hedgehogs are available at the following tracks: ";
+    cout << "\nSPIDERMAN - HEDGEHOGS READY TO MOVE ARE ON THESE TRACKS :: ";
     cout << endl;
     for (auto setIterator : setOfTracks)
     {
@@ -542,26 +505,18 @@ void GameBoard ::printPositions(Player &player)
     }
 }
 
-void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &player, vector<Player> &playerVector)
+void GameBoard ::move(int choice, int trackNumber, int columnNumber, Player &player, vector<Player> &playerVector)
 {
-    cout << " Inside move :: " << endl;
-
     // storing size which will be used later
     int size = mainBoard[trackNumber][columnNumber].cellStack.size();
 
-    cout << "\n\nROW NUMBER :: " << trackNumber;
-    cout << "\n\nCOLUMN NUMBER :: " << columnNumber;
-
     // storing value of hedgehog
     string hedgehog = mainBoard[trackNumber][columnNumber].cellStack.top();
-    cout << "\n\nINCOMING HEDGEHOG :: " << hedgehog << endl;
 
     string hghNumberInString = hedgehog.substr(hedgehog.size() - 1, 1);
-    cout << "\n\nHEDGEHOG NUMBER :: " << hghNumberInString;
     int hedgehogNumber = stoi(hghNumberInString);
 
     string hghSubString = hedgehog.substr(0, hedgehog.size() - 1);
-    cout << "\n\nHEDGEHOG SUBSTRING :: " << hghSubString << endl;
 
     int row, column;
     if (choice == 1)
@@ -582,24 +537,25 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
         column = columnNumber;
     }
 
-    if (mainBoard[row][column].finishLine)
+    if (mainBoard[row][column].cellName == "| FINISH LINE | ")
     {
-        for (auto playerIterator : playerVector)
+        // Popping the element since it is going to next cell
+        mainBoard[trackNumber][columnNumber].cellStack.pop();
+
+        // Removing the last element of array so that after movement, displaying is correct.
+        mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
+        mainBoard[trackNumber][columnNumber].elementsCounter--;
+
+        for (auto &playerIterator : playerVector)
         {
             if (hedgehog.find(playerIterator.getColor()) != -1)
             {
-                cout << "\n\nFINISHED HEDGEHOGS BEFORE FINISH LINE :: " << playerIterator.finishedHedgehogs;
+                cout << "\nBEFORE :: " << playerIterator.finishedHedgehogs;
                 playerIterator.finishedHedgehogs++;
-                cout << "\n\nFINISHED HEDGEHOGS AFTER FINISH LINE :: " << playerIterator.finishedHedgehogs;
+                cout << "\n\nAFTER :: " << playerIterator.finishedHedgehogs << endl;
 
-                // Popping the element since it is going to next cell
-                mainBoard[trackNumber][columnNumber].cellStack.pop();
-
-                // Removing the last element of array so that after movement, displaying is correct.
-                mainBoard[trackNumber][columnNumber].elementsDisplayerArray[size - 1] = '\0';
-                mainBoard[trackNumber][columnNumber].elementsCounter--;
-
-                cout << "\nSPIDERMAN - A " << playerIterator.getColor() << " HEDGEHOG JUST CROSSED A FINISH LINE! GOOD JOBBBB!" << endl << endl;
+                cout << "\nSPIDERMAN - A " << playerIterator.getColor() << " HEDGEHOG JUST CROSSED A FINISH LINE! GOOD JOBBBB!" << endl
+                     << endl;
 
                 displayBoard();
 
@@ -709,7 +665,7 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
             // make accessibility false, because the hedgehog won't be accessible after falling into the shallow pit
             for (auto playerIterator : playerVector)
             {
-                if (playerIterator.getName() == hedgehog)
+                if (hedgehog.find(playerIterator.getColor()) != -1)
                 {
                     playerIterator.hghPositionArray[hedgehogNumber - 1].accessible = false;
                 }
@@ -756,8 +712,8 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
     // D E E P - P I T
     else if (mainBoard[row][column].cellName.find("DEEPP") != -1)
     {
-        cout << "\n\nGoing into deep pit";
         mainBoard[row][column].deepPit.push(hedgehog);
+
         // Increment
         mainBoard[row][column].sizeOfDeepPit++;
 
@@ -774,26 +730,26 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
         // make accessibility false, because the hedgehog won't be accessible after falling into the deep pit
         for (auto playerIterator : playerVector)
         {
-            cout << "\n\nPLAYER NAME :: " << playerIterator.getName() << endl;
-            cout << "\n\nPLAYER COLOR :: " << playerIterator.getColor() << endl;
-            cout << "\n\nHEDGEHOG CHECKING :: " << hedgehog << endl;
             if (hedgehog.find(playerIterator.getColor()) != -1)
             {
-                cout << "\n\nACCESSIBILITY OF THE HEDGEHOG :: " << hedgehog << " :: " << playerIterator.hghPositionArray[hedgehogNumber - 1].accessible << endl;
                 playerIterator.hghPositionArray[hedgehogNumber - 1].accessible = false;
-                cout << "\n\nACCESSIBILITY AFTER CHANGING THE STATUS :: " << playerIterator.hghPositionArray[hedgehogNumber - 1].accessible << endl;
             }
         }
 
         if (mainBoard[row][column].sizeOfDeepPit == 3)
         {
             string poppedHgh = mainBoard[row][column].deepPit.front();
-            cout << "\n\nELEMENT THAT WILL BE POPPED IS :: "
-                 << poppedHgh << endl;
+            string poppedHghNumberInString = poppedHgh.substr(poppedHgh.size() - 1, 1);
+            string poppedHghName = poppedHgh.substr(0, poppedHgh.size() - 1);
+            int poppedHedgehogNumber = stoi(poppedHghNumberInString);
+
             mainBoard[row][column].deepPit.pop();
 
             // Don't forget to decrement
             mainBoard[row][column].sizeOfDeepPit--;
+
+            // Don't forget to add into elements counter
+            mainBoard[row][column].elementsCounter--;
 
             // It's pretty tricky for deep pit.
             // Usually we are using the elementsDisplayerArray of cells class to show the components of a cells
@@ -810,11 +766,12 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
             // Make the hedgehog accessible
             for (auto playerIterator : playerVector)
             {
-                if (playerIterator.getColor() == poppedHgh)
+                if (poppedHghName.find(playerIterator.getColor()) != -1)
                 {
-                    playerIterator.hghPositionArray[hedgehogNumber - 1].accessible = true;
+                    playerIterator.hghPositionArray[poppedHedgehogNumber - 1].accessible = true;
                 }
             }
+
             // After trapping the hedgehog, we want other hedgehogs to skip the shallow pit and go to the next cell, so we'll change the cells
             // But this only happens if and only if the shallow pit already has trapped a hedgehog!
             if (choice == 1)
@@ -843,7 +800,7 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
         }
     }
     // CHECK IF THE PLAYER IS TRYNA MOVE THE HEDGEHOG FROM THE DEEP PIT. THAT SHOULD NOT BE ALLOWED.
-    else if (mainBoard[trackNumber][columnNumber].cellName.find("BLCKH") != -1)
+    else if (mainBoard[trackNumber][columnNumber].cellName.find("DEEPP") != -1)
     {
         cout << "\nSPIDERMAN - NU UH DEAR! YOU CAN'T MOVE YOUR HEDGEHOG! IT's TRAPPED IN A DEEP PIT. GOOD HEAVENS, WAIT FOR YOUR LUCK TO TURN AROUND!" << endl;
     }
@@ -900,13 +857,6 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
             // increasing the size of array since the player has moved to this new cell
             mainBoard[row][column].elementsCounter++;
             cout << "\n";
-            //             std::this_thread::sleep_for(std::chrono::seconds(1));
-
-            // cout << "\n-----------------------------------------------\n";
-
-            // cout << "\n-----------------------------------------------\n";
-            //             std::this_thread::sleep_for(std::chrono::seconds(1));
-            //         }
 
             if (player.intialMovement == -1)
             {
@@ -919,7 +869,7 @@ void GameBoard :: move(int choice, int trackNumber, int columnNumber, Player &pl
     displayBoard();
 }
 
-void GameBoard :: printUserHhgPositionsInTheTrack(Player &player, int trackNumber)
+void GameBoard ::printUserHhgPositionsInTheTrack(Player &player, int trackNumber)
 {
 
     int j = 0;
@@ -928,13 +878,9 @@ void GameBoard :: printUserHhgPositionsInTheTrack(Player &player, int trackNumbe
     {
         if (mainBoard[trackNumber][i].cellName == "DEEPP")
         {
-            cout << "\n\nTHIS IS A DEEP PIT!";
-            continue;
         }
         if (mainBoard[trackNumber][i].cellName == "SHLWP")
         {
-            cout << "\n\nTHIS IS A SHALLOW PIT!";
-            continue;
         }
         if (mainBoard[trackNumber][i].cellStack.empty() == 0)
         {
@@ -944,12 +890,13 @@ void GameBoard :: printUserHhgPositionsInTheTrack(Player &player, int trackNumbe
         }
     }
 
-    if(j == 0){
+    if (j == 0)
+    {
         cout << "\nSPIDERMAN - LOOKS LIKE NO HEDGEHOGS ARE PRESENT FOR THE PLAYER!";
         return;
     }
 
-    cout << "\nSPIDERMAN - Your hedgehogs are available at the following tracks: ";
+    cout << "\nSPIDERMAN - YOUR HEDGEHOGS ARE ON THESE TRACKS, READY TO MOVE :: ";
     cout << endl;
     for (auto setIterator : setOfTracks)
     {
