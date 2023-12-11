@@ -1,7 +1,10 @@
 #ifndef CELLS_H_
 #define CELLS_H_
 
+#include "Player.h"
+
 #include <stack>
+#include<queue>
 #include <string>
 #include <iostream>
 
@@ -14,6 +17,11 @@ class Cells{
         int elementsCounter = 0;
         stack<string> cellStack;
         string cellName;
+
+        queue<string> deepPit;
+        int sizeOfDeepPit = 0 ;
+
+        bool finishLine = false;
 
         void displayElementsOnBoard();
 };

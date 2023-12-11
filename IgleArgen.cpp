@@ -1,11 +1,11 @@
+#include <thread>
+
 #include "GameBoard.h"
-#include "GameBoard.cpp"
 #include "Square.h"
 #include "Player.h"
-// #include "Dice.cpp"
-// #include "Dice.h"
+#include "Dice.cpp"
+#include "Dice.h"
 #include "player.cpp"
-#include <thread>
 
 #include <string>
 #include <iostream>
@@ -34,12 +34,19 @@ int main()
     // playerObject.initializePlayers(players, numberOfPlayers);
 
     // HARDCODED FOR NOW< TO BE DELETED LATER
+    
+    Player p1("umema", "black");
     Player p2("ria", "red");
-    Player p1("jaswanth", "blue");
+    // Player p3("sai", "green");
+    // Player p4("gowtham", "blue");
     players.push_back(p1);
+    players.push_back(p2);
+    // players.push_back(p3);
+    // players.push_back(p4);
     p1.flush();
     p2.flush();
-    players.push_back(p2);
+    // p3.flush();
+    // p4.flush();
 
     //     // cout << "\n-----------------------------------------------\n";
     //     // cout << "-----------------------------------------------\n";
@@ -64,7 +71,8 @@ int main()
     //     // std::this_thread::sleep_for(std::chrono::seconds(2));
 
     //     // CREATION OF GAME BOARD
-    GameBoard game(6, 9);
+    Square * game = new GameBoard(7,10);
+    // GameBoard game(7, 10);
 
     //     // cout << "\n-----------------------------------------------\n";
 
@@ -72,21 +80,24 @@ int main()
     //     // cout << "-----------------------------------------------\n\n";
 
     //     // Board initialization
-    game.initializeBoard();
+    game->initializeBoard();
 
     //     // Call this to place obstacles on the board
-    game.placeObstacles();
+    game->placeObstacles();
 
-    set<int> numset; // Set to keep track of chosen tracks
+    // Set to keep track of chosen tracks
+    set<int> numset; 
 
-    game.displayBoard();
+    game->displayBoard();
 
-    //     // cout << "\n-----------------------------------------------\n";
+    // //     // cout << "\n-----------------------------------------------\n";
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(2));
-    //     // cout << "-----------------------------------------------\n";
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(2));
+    // //     // cout << "-----------------------------------------------\n";
 
-    //     cout << "\nSPIDERMAN - SO, " << endl;
+    // //     cout << "\nSPIDERMAN - SO, " << endl;
+
+    Dice dice;
 
     bool looper = true;
     int loopCounter = 0;
@@ -95,11 +106,13 @@ int main()
     {
         for (Player &player : players)
         {
-            player.placeHedgehogs(game, numset, loopCounter, level);
+
+            game -> placeHedgehogs(player, numset, loopCounter, level);
+            // player.placeHedgehogs( game, numset, loopCounter, level);
 
             // cout << "\n-----------------------------------------------\n";
 
-            game.displayBoard();
+            game -> displayBoard();
 
             // cout << "\n-----------------------------------------------\n";
 
@@ -111,66 +124,65 @@ int main()
         }
     }
 
-    //     // cout << "\n-----------------------------------------------\n";
+    // //     // cout << "\n-----------------------------------------------\n";
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(2));
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(2));
 
-    //     // cout << "-----------------------------------------------\n";
+    // //     // cout << "-----------------------------------------------\n";
 
-    //     // cout << "\nSPIDERMAN - THE PLACING OF HEDGEHOGS HAS BEEN DONE! I'LL NOW DISPLAY THE RULES!" << endl;
+    // //     // cout << "\nSPIDERMAN - THE PLACING OF HEDGEHOGS HAS BEEN DONE! I'LL NOW DISPLAY THE RULES!" << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(3));
-    //     // cout << "\nSPIDERMAN - THE OBSTACLES ARE MARKED WITH X. THE PATHS ARE MADE WITH ____." << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(3));
+    // //     // cout << "\nSPIDERMAN - THE OBSTACLES ARE MARKED WITH X. THE PATHS ARE MADE WITH ____." << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(3));
-    //     // cout << "\nSPIDERMAN - THE OBSTACLES ARE BLACKHOLES. IF YOUR HEDGEHOG FALLS INTO IT, YOUR HEDGEHOG WILL GO TO SLEEP AND WON'T WAKE UP!" << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(3));
+    // //     // cout << "\nSPIDERMAN - THE OBSTACLES ARE BLACKHOLES. IF YOUR HEDGEHOG FALLS INTO IT, YOUR HEDGEHOG WILL GO TO SLEEP AND WON'T WAKE UP!" << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(3));
-    //     // cout << "\nSPIDERMAN - YOU NEED TO TAKE 3 HEDGEHOGS PAST THE FINISH LINE IN ORDER TO BE NAMED THE CHAMPION OF IGLE ARGEN!" << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(3));
+    // //     // cout << "\nSPIDERMAN - YOU NEED TO TAKE 3 HEDGEHOGS PAST THE FINISH LINE IN ORDER TO BE NAMED THE CHAMPION OF IGLE ARGEN!" << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(5));
-    //     // cout << "\nSPIDERMAN - THE PLAYERS WILL PLAY IN ORDER." << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(5));
+    // //     // cout << "\nSPIDERMAN - THE PLAYERS WILL PLAY IN ORDER." << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(5));
-    //     // cout << "\nSPIDERMAN - THE PLAYERS CAN MOVE EITHER FORWARD OR LEFT OR RIGHT! THE NUMBER THAT COMES ON THE DICE, THAT TRACK'S HEDGEHOG WILL MOVE, AND THAT IS COMPULSARY." << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(5));
+    // //     // cout << "\nSPIDERMAN - THE PLAYERS CAN MOVE EITHER FORWARD OR LEFT OR RIGHT! THE NUMBER THAT COMES ON THE DICE, THAT TRACK'S HEDGEHOG WILL MOVE, AND THAT IS COMPULSARY." << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(5));
-    //     // cout << "\nSPIDERMAN - AS YOU PLAY THE GAME, THINGS WILL BE CLEARER. AND DON'T WORRY, SPIDERMAN IS HERE TO HELP YOU OUT." << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(5));
+    // //     // cout << "\nSPIDERMAN - AS YOU PLAY THE GAME, THINGS WILL BE CLEARER. AND DON'T WORRY, SPIDERMAN IS HERE TO HELP YOU OUT." << endl;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(5));
-    //     // cout << "\nSPIDERMAN - SIT TIGHT, PLAY AND FIGHT! ALL THE BEST!" << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(5));
+    // //     // cout << "\nSPIDERMAN - SIT TIGHT, PLAY AND FIGHT! ALL THE BEST!" << endl;
 
-    //     // cout << "\n-----------------------------------------------\n";
-    //     // cout << "-----------------------------------------------\n";
+    // //     // cout << "\n-----------------------------------------------\n";
+    // //     // cout << "-----------------------------------------------\n";
 
-    //     // cout << "\n PLEASE PRESS 1 TO START THE GAME " << endl;
+    // //     // cout << "\n PLEASE PRESS 1 TO START THE GAME " << endl;
 
-    //     // cout << "\n-----------------------------------------------\n";
-    //     // cout << "-----------------------------------------------\n";
+    // //     // cout << "\n-----------------------------------------------\n";
+    // //     // cout << "-----------------------------------------------\n";
 
     int playerInput, trackNumber, columnNumber;
     int hedgehogNumber;
 
-    //     // if (cin >> playerInput)
-    //     // {
-    //     //     cout << "\nSPIDERMAN - LET THE GAMES BEGIN" << endl;
+    // //     // if (cin >> playerInput)
+    // //     // {
+    // //     //     cout << "\nSPIDERMAN - LET THE GAMES BEGIN" << endl;
 
-    //     //     cout << "\n-----------------------------------------------\n";
-    //     //     cout << "-----------------------------------------------\n";
-    //     // }
+    // //     //     cout << "\n-----------------------------------------------\n";
+    // //     //     cout << "-----------------------------------------------\n";
+    // //     // }
 
     bool mainLoop = true;
-    //     // // Dice dice;
 
-    //     // std::this_thread::sleep_for(std::chrono::seconds(1));
-    //     // cout << "\nSPIDERMAN - BOARD IS DIPLAYED AS FOLLOWS" << endl;
+    // //     // std::this_thread::sleep_for(std::chrono::seconds(1));
+    // //     // cout << "\nSPIDERMAN - BOARD IS DIPLAYED AS FOLLOWS" << endl;
 
-    //     // cout << "\n-----------------------------------------------\n";
+    // //     // cout << "\n-----------------------------------------------\n";
 
-    //     // game.displayBoard();
+    // //     // game.displayBoard();
 
-    //     // cout << "\n-----------------------------------------------\n";
-    //     // cout << "1";
+    // //     // cout << "\n-----------------------------------------------\n";
+    // //     // cout << "1";
 
     int indexOfWinner;
     // mainLoopOfTheGame:
@@ -181,116 +193,50 @@ int main()
             cout << "\nSPIDERMAN - " << playerIterator.getName() << ", PLEASE PRESS ANY KEY TO ROLL YOUR DICE - ";
             cin >> playerInput;
 
-            // Need to be shifted to dice class
-            srand(time(0));
-            int random = 1 + (rand() % 6);
-            int userChoice = playerIterator.movement(game, random);
+            int random = dice.roll();
+            int userChoice = game -> movement(random);
 
             if (userChoice == 1)
             {
+                cout << "\nSPIDERMAN -  WHERE WOULD YOU LIKE TO MOVE YOUR PIECE? AHEAD?(1) LEFT?(2) RIGHT?(3) :: ";
+                cin >> userChoice;
 
-                if (playerIterator.intialMovement == -1)
+                // Prints the location where the user's hedgehog can move!
+                game -> printUserHhgPositions(playerIterator);
+
+                cout << "\n\nSPIDERMAN - PLEASE SELECT THE TRACK NUMBER FROM THE ABOVE OPTIONS :: ";
+                cin >> trackNumber;
+
+                // Checks if the track entered is correct or not!
+                game -> checkTrackEligibility(trackNumber, userChoice, playerIterator);
+
+                if (userChoice == 2)
                 {
-                    cout << "\nSPIDERMAN -  YOU HAVE CHOSEN MOVEMENT. YOUR HEDGEHOG WILL MOVE AHEAD!";
-                    userChoice = 1;
+                    game -> checkTrackEligibility(trackNumber, userChoice, playerIterator);
                 }
 
-                else
+                if (userChoice == 3)
                 {
-                    cout << "\nSPIDERMAN -  WHERE WOULD YOU LIKE TO MOVE YOUR PIECE? AHEAD?(1) LEFT?(2) RIGHT?(3) :: ";
-                    cin >> userChoice;
-
-                    // Prints the location where the user's hedgehog can move!
-                    playerIterator.printUserHhgPositions(game);
-
-                    cout << "\n\nSPIDERMAN - PLEASE SELECT THE TRACK NUMBER FROM THE ABOVE OPTIONS :: ";
-                    cin >> trackNumber;
-
-                    if (trackNumber < 1 || trackNumber > 7)
-                    {
-                        bool y = true;
-
-                        while (y)
-                        {
-                            cout << "\nSPIDERMAN - DON'T BE SMART! ENTER CORRECT TRACK NUMBER :: ";
-                            cin >> trackNumber;
-
-                            if (trackNumber > 0 || trackNumber < 7)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (userChoice == 2 && (trackNumber - 1) < 0)
-                    {
-
-                        bool l = true;
-                        while (l)
-                        {
-                            cout << "\nSPIDERMAN - FUNNY OF YOU TO MOVE YOUR HEDGEHOG OUT OF THE BOARD " << playerIterator.getName() << ". CHOOSE A PROPER TRACK. YOU CAN'T MOVE TO LEFT! ";
-
-                            cin >> trackNumber;
-
-                            if (-1 < (trackNumber - 1))
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    if (userChoice == 3 && (trackNumber + 1) > 6)
-                    {
-                        bool l = true;
-                        while (l)
-                        {
-                            cout << "\nSPIDERMAN - FUNNY OF YOU TO MOVE YOUR HEDGEHOG OUT OF THE BOARD " << playerIterator.getName() << ". CHOOSE A PROPER TRACK. YOU CAN'T MOVE TO RIGHT! :: ";
-
-                            cin >> trackNumber;
-
-                            if (7 > (trackNumber + 1) && -1 < (trackNumber))
-                            {
-                                break;
-                            }
-                        }
-                    }
+                    game -> checkTrackEligibility(trackNumber, userChoice, playerIterator);
                 }
 
                 // We are taking the column number also because what if the track has multiple open hedgehogs. The only way to differentiate that is by column number
                 cout << "\nSPIDERMAN - ENTER COLUMN NUMBER :: ";
-                cin >> columnNumber;
+                cin >> columnNumber; 
 
-                if (game.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.empty() == 1 || game.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top().find(playerIterator.getColor()) == -1)
-                {
+                // add deep pit movement
+                game -> playerTryingToMoveHedggehogFromDeepPit(trackNumber, columnNumber);
 
-                    bool k = true;
-                    while (k)
-                    {
+                // Takes the correct column number from the player
+                game -> foundNothing(trackNumber, columnNumber, playerIterator, 1);
 
-                        cout << "\nSPIDERMAN - LOOKS LIKE THE COLUMN NUMBER YOU CHOSE IS NOT CORRECT. PLEASE RECHECK THE COLUMN NUMBER AND ENTER IT :: ";
-                        cin >> columnNumber;
+                game -> move(userChoice, trackNumber, columnNumber, playerIterator, players);
 
-                        if (game.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.empty() == 1 || game.mainBoard[trackNumber - 1][columnNumber - 1].cellStack.top().find(playerIterator.getColor()) != -1)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                // ADD A CHECK WHETHER THE USER HAS GIVEN PROPER TRACK NUMBER OR NOT, BUT DO WE NEED TO THOUGH?
-                playerIterator.move(userChoice, trackNumber - 1, columnNumber - 1, game, players);
-
+                // THIS REMOVES THE PLAYER FROM THE GAME
                 if (playerIterator.sleepingHedgehogs == 2)
                 {
-                    cout << "\nSPIDERMAN - " << playerIterator.getName() << " BOOO! YOU ARE OUT OF THE GAME! BETTER LUCK NEXT TIME BUDDY!" << endl;
-                    for (int i = 0; i < players.size(); i++)
-                    {
-                        if (players[i].getName().find(playerIterator.getName()) != -1)
-                        {
-                            players.erase(players.begin() + i);
-                            indexOfWinner = i;
-                        }
-                    }
+                    // removes the player from the game
+                    game->removePlayerFromGame(playerIterator, players, indexOfWinner);
                 }
 
                 if (players.size() < 2)
@@ -302,6 +248,8 @@ int main()
                     break;
                 }
 
+                cout << "FINISHED HEDGEHOGS OF " << playerIterator.getColor() << " :: " << playerIterator.finishedHedgehogs << endl
+                     << endl;
                 if (playerIterator.finishedHedgehogs == 3)
                 {
                     cout << "\nSPIDERMAN - WE HAVE A WINNER FOR OUR IGLE ARGEN!! EVERONE PlEASE GIVE A HUGE ROUND OF APPLAUSE FOR " << playerIterator.getName() << endl;
@@ -315,57 +263,38 @@ int main()
                 cout << "\nSPIDERMAN - OHO!!! " << playerIterator.getName() << " IS NOT GOING TO MOVE THEIR PIECE. WHAT A STRATEGIST!!";
             }
 
-            cout << "\nSPIDERMAN - TIME FOR THE MANDATORY MOVEMENT!" << endl;
-
             // Checking if anything is available on track to even move.
             // We have used random because this is the third step that is going to happen next.
-            bool check = game.checkPresenceOfHedgeHog(random - 1);
+            bool check = game->checkPresenceOfHedgeHog(random);
 
             // if we have any hedgehog available to move on the track then we allow the movement, otherwise we say there is no movement allowed for the track.
             if (check)
             {
                 cout << "\nSPIDERMAN - THIS IS THE MANDATORY STEP. ON TRACK " << random << ", " << playerIterator.getName() << ", CHOOSE THE COLUMN OF THE HEDGEHOG YOU WOULD LIKE TO MOVE FORWARD! :: ";
+
+                // Prints the location where the user's hedgehog can move!
+                game -> printUserHhgPositionsInTheTrack(playerIterator, random);
+
                 cin >> columnNumber;
 
-                if (game.mainBoard[random - 1][columnNumber - 1].cellStack.empty() == 1)
-                {
-                    bool k = true;
-                    while (k)
-                    {
+                game->playerTryingToMoveHedggehogFromDeepPit(random, columnNumber);
 
-                        cout << "\nSPIDERMAN - LOOKS LIKE THE COLUMN NUMBER YOU CHOSE IS NOT CORRECT. PLEASE RECHECK THE COLUMN NUMBER AND ENTER IT :: ";
-                        cin >> columnNumber;
-
-                        if (game.mainBoard[random - 1][columnNumber - 1].cellStack.empty() == 1)
-                        {
-                            break;
-                        }
-                    }
-                }
+                game -> foundNothing(random, columnNumber, playerIterator, 2);
 
                 // Sending hardcoded 1 since the player is supposed to move forward, random - 1 is the track
-                playerIterator.move(1, random - 1, columnNumber - 1, game, players);
+                cout << "\nCOLUMN NUMBER BEFORE GOING IN :: " << columnNumber << endl;
+                game -> move(1, random, columnNumber, playerIterator, players);
             }
 
-            else
+            if (!check)
             {
-                cout << "\nSPIDERMAN - LOOKS LIKE THIS TRACK IS EMPTY FOR NOW!";
+                cout << "\nSPIDERMAN - THE MANDATORY MOVEMENT CANNOT TAKE PLACE BECAUSE THERE IS NO HEDGEHOG AVAILABLE TO MOVE!" << endl;
             }
-            // Adding the flow for obstacles
 
-            // throw the player out of the game
             if (playerIterator.sleepingHedgehogs == 2)
             {
-                cout << "\nSPIDERMAN - " << playerIterator.getName() << " BOOO! YOU ARE OUT OF THE GAME! BETTER LUCK NEXT TIME BUDDY!" << endl;
-
-                for (int i = 0; i < players.size(); i++)
-                {
-                    if (players[i].getName().find(playerIterator.getName()) != -1)
-                    {
-                        players.erase(players.begin() + i);
-                        indexOfWinner = i;
-                    }
-                }
+                // removes the player from the game
+                game->removePlayerFromGame(playerIterator, players, indexOfWinner);
             }
 
             if (players.size() < 2)
@@ -376,6 +305,8 @@ int main()
                 break;
             }
 
+            cout << "FINISHED HEDGEHOGS OF " << playerIterator.getColor() << " :: " << playerIterator.finishedHedgehogs << endl
+                 << endl;
             if (playerIterator.finishedHedgehogs == 3)
             {
                 cout << "\nSPIDERMAN - WE HAVE A WINNER FOR OUR IGLE ARGEN!! EVERONE PlEASE GIVE A HUGE ROUND OF APPLAUSE FOR " << playerIterator.getName() << endl;
@@ -384,11 +315,6 @@ int main()
             }
         }
     }
-    //     std::this_thread::sleep_for(std::chrono::seconds(5));
-    //     cout << "";
 
     return 0;
 }
-
-// NOTES
-//  Don't allow the players to move left or right in the starting
